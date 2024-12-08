@@ -218,7 +218,7 @@ header, .features, .gallery, .contact {
     color: #ffffff;
     padding: 4rem 0;
     text-align: center;
-    min-height: 70vh;
+    min-height: 60vh;
 }
 
 .contact h2 {
@@ -306,7 +306,7 @@ header, .features, .gallery, .contact {
     color: #bdbdbd;
     text-align: center;
     padding: 2rem 0;
-    min-height: 30vh;
+    min-height: 5vh;
 }
 
 .footer p {
