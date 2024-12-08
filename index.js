@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("wheel", (event) => {
         if (isScrolling) return; // 如果正在滚动，直接返回
 
-        const sensitivityThreshold = 15; // 滚动灵敏度阈值
+        const sensitivityThreshold = 30; // 滚动灵敏度阈值
         if (Math.abs(event.deltaY) < sensitivityThreshold) return; // 如果滚动距离太小，不触发翻页
 
         if (event.deltaY > 0 && currentIndex < sections.length - 1) {
