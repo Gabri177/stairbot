@@ -112,9 +112,37 @@ header, .features, .gallery, .contact {
 
 /* Features Section */
 .features {
-    background-color: #2e2e2e;
-    padding: 4rem 0;
-    min-height: 100vh;
+    position: relative; /* 为了放置遮罩层 */
+    background-image: url('images/feature-bk.jpg'); /* 替换为你的背景图片路径 */
+    background-size: cover; /* 背景图片覆盖 */
+    background-position: center; /* 图片居中 */
+    padding: 4rem 0; /* 上下内边距 */
+    min-height: 100vh; /* 占据整个页面高度 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3rem;
+    color: #e0e0e0; /* 保证文字清晰 */
+}
+
+/* 白色半透明遮罩层 */
+.features::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1; /* 遮罩层在背景图之上 */
+}
+
+/* 标题和内容的层级调整 */
+.features h2,
+.feature-grid {
+    position: relative;
+    z-index: 2; /* 确保内容在遮罩层之上 */
 }
 
 .features h2 {
@@ -163,24 +191,49 @@ header, .features, .gallery, .contact {
 }
 
 /* Gallery Section */
+/* Gallery Section with Background Image and Overlay */
 .gallery {
-    background-color: #212121; /* 保持原始背景色 */
-    padding: 3rem 0; /* 增加垂直间距 */
-    min-height: 100vh; /* 占据整个页面 */
+    position: relative; /* 为了放置遮罩层 */
+    background-image: url('./images/header-bg.jpg'); /* 替换为你的背景图片路径 */
+    background-size: cover; /* 确保背景图片覆盖整个容器 */
+    background-position: center; /* 图片居中显示 */
+    padding: 3rem 0; /* 原始的上下内边距 */
+    min-height: 100vh; /* 占据整个页面高度 */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* 改为顶部对齐 */
-    gap: 3rem; /* 增加标题和内容之间的间距 */
+    justify-content: flex-start;
+    gap: 3rem;
+    color: #e0e0e0; /* 确保文字在背景上清晰可见 */
 }
+
+/* 白色半透明遮罩层 */
+.gallery::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(129, 129, 129, 0.5); /* 50%透明的白色 */
+    z-index: 1; /* 确保遮罩层在背景图上方 */
+}
+
+/* 调整标题和网格的层级 */
+.gallery h2,
+.gallery-grid {
+    position: relative;
+    z-index: 2; /* 确保内容在遮罩层上方 */
+}
+
 
 .gallery h2 {
     text-align: center;
     vertical-align: top;
-    font-size: 4rem; /* 增加标题字体大小 */
+    font-size: 5rem; /* 增加标题字体大小 */
     margin-top: 2rem; /* 设置标题距离顶部的间距 */
     margin-bottom: 3rem; /* 增加标题与内容之间的间距 */
-    color: #f9a825;
+    color: #d4ccbd;
 }
 
 .gallery-grid {
