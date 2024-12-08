@@ -5,6 +5,12 @@ body {
     color: #e0e0e0;
     background-color: #1c1c1c;
     line-height: 1.6;
+    overflow: hidden;
+}
+
+
+header, .features, .gallery, .contact {
+    scroll-snap-align: start;
 }
 
 .container {
@@ -108,11 +114,13 @@ body {
 .features {
     background-color: #2e2e2e;
     padding: 4rem 0;
+    min-height: 100vh;
 }
 
 .features h2 {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 4rem;
+    margin-top: 1rem;
     margin-bottom: 2rem;
     color: #f9a825;
 }
@@ -156,39 +164,52 @@ body {
 
 /* Gallery Section */
 .gallery {
-    background-color: #212121;
-    padding: 4rem 0;
+    background-color: #212121; /* 保持原始背景色 */
+    padding: 3rem 0; /* 增加垂直间距 */
+    min-height: 100vh; /* 占据整个页面 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* 改为顶部对齐 */
+    gap: 3rem; /* 增加标题和内容之间的间距 */
 }
 
 .gallery h2 {
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
+    vertical-align: top;
+    font-size: 4rem; /* 增加标题字体大小 */
+    margin-top: 2rem; /* 设置标题距离顶部的间距 */
+    margin-bottom: 3rem; /* 增加标题与内容之间的间距 */
     color: #f9a825;
 }
 
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+    display: grid; /* 使用网格布局 */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 响应式列宽 */
+    gap: 1rem; /* 增加网格项之间的间距 */
+    width: 100%; /* 调整宽度以适应屏幕 */
+    max-width: 1200px; /* 限制最大宽度 */
+    margin-top: 9rem; /* 向下推内容 */
+    margin-bottom: 2rem; /* 增加内容底部的间距 */
+    justify-items: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 
 .gallery-grid img {
-    width: 100%;
+    width: 100%; /* 图片自适应宽度 */
     height: auto;
-    border-radius: 10px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-    opacity: 0;
-    animation: fadeIn 1s ease forwards;
-    animation-delay: calc(var(--delay, 0) * 0.2s);
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+    max-width: 300px; /* 限制最大宽度 */
+    border-radius: 10px; /* 圆角效果 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* 增加阴影 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加平滑过渡 */
+    cursor: pointer; /* 鼠标悬停变成手势 */
 }
 
 .gallery-grid img:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.6);
+    transform: scale(1.05); /* 鼠标悬停放大 */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.6); /* 鼠标悬停增强阴影 */
 }
+
 
 
 /* Contact Section */
@@ -197,11 +218,13 @@ body {
     color: #ffffff;
     padding: 4rem 0;
     text-align: center;
+    min-height: 70vh;
 }
 
 .contact h2 {
-    font-size: 2.5rem;
+    font-size: 4rem;
     margin-bottom: 1.5rem;
+    margin-top: 1rem;
     color: #f9a825;
 }
 
@@ -283,6 +306,7 @@ body {
     color: #bdbdbd;
     text-align: center;
     padding: 2rem 0;
+    min-height: 30vh;
 }
 
 .footer p {

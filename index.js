@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    //返回顶部按钮
+    // 返回顶部按钮
     const backToTop = document.createElement("button");
-    backToTop.textContent = "⬆️";
+    backToTop.textContent = "⬆";
     backToTop.style.position = "fixed";
     backToTop.style.bottom = "20px";
     backToTop.style.right = "20px";
@@ -27,7 +27,61 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    //动态加载效果
+    // 滚轮切换部分功能
+    const sections = document.querySelectorAll("header, .features, .gallery, .contact"); // 包含所有部分
+    let currentIndex = 0; // 当前部分索引
+
+    const scrollToSection = (index) => {
+        if (index >= 0 && index < sections.length) {
+            sections[index].scrollIntoView({ behavior: "smooth" });
+            currentIndex = index;
+        }
+    };
+
+    let isScrolling = false; // 防止多次触发滚动
+    window.addEventListener("wheel", (event) => {
+        if (isScrolling) return; // 如果正在滚动，直接返回
+
+        const sensitivityThreshold = 15; // 滚动灵敏度阈值
+        if (Math.abs(event.deltaY) < sensitivityThreshold) return; // 如果滚动距离太小，不触发翻页
+
+        if (event.deltaY > 0 && currentIndex < sections.length - 1) {
+            // 向下滚动
+            isScrolling = true;
+            scrollToSection(currentIndex + 1);
+        } else if (event.deltaY < 0 && currentIndex > 0) {
+            // 向上滚动
+            isScrolling = true;
+            scrollToSection(currentIndex - 1);
+        }
+
+        // 延迟解除滚动锁定
+        setTimeout(() => {
+            isScrolling = false;
+        }, 1000); // 滚动动画完成时间
+    });
+
+    // 添加键盘事件支持
+    window.addEventListener("keydown", (event) => {
+        if (isScrolling) return; // 如果正在滚动，直接返回
+
+        if (event.key === "ArrowDown" && currentIndex < sections.length - 1) {
+            // 按下下箭头
+            isScrolling = true;
+            scrollToSection(currentIndex + 1);
+        } else if (event.key === "ArrowUp" && currentIndex > 0) {
+            // 按下上箭头
+            isScrolling = true;
+            scrollToSection(currentIndex - 1);
+        }
+
+        // 延迟解除滚动锁定
+        setTimeout(() => {
+            isScrolling = false;
+        }, 1000); // 滚动动画完成时间
+    });
+
+    // 动态加载效果
     const elementsToAnimate = document.querySelectorAll(".feature, .gallery-grid img");
     const observer = new IntersectionObserver(
         (entries, observer) => {
@@ -43,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     elementsToAnimate.forEach((el) => observer.observe(el));
 
-    //图片模态框
+    // 图片模态框
     const galleryImages = document.querySelectorAll(".gallery-grid img");
     const modal = document.createElement("div");
     modal.style.position = "fixed";
@@ -75,39 +129,15 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "none";
     });
 
-    //表单实时校验
+    // 表单实时校验
     const form = document.querySelector(".contact-form");
     const emailInput = document.querySelector("#email");
 
     emailInput.addEventListener("input", () => {
-        if (!emailInput.value.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+        if (!emailInput.value.match(/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/)) {
             emailInput.style.borderColor = "red";
         } else {
             emailInput.style.borderColor = "green";
         }
     });
-
-    //滚动触发的文字动画
-    const textElements = document.querySelectorAll(".intro h2, .intro p");
-    textElements.forEach((el) => {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(20px)";
-        el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-    });
-
-    const textObserver = new IntersectionObserver(
-        (entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.1 }
-    );
-
-    textElements.forEach((el) => textObserver.observe(el));
-
 });
