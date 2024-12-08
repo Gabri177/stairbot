@@ -27,75 +27,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 滚轮切换部分功能
-    const sections = document.querySelectorAll("header, .features, .gallery, .contact"); // 包含所有部分
+    // 翻页部分
+    const sections = document.querySelectorAll("header, .features, .gallery, .contact"); // 页面部分
     let currentIndex = 0; // 当前部分索引
 
     const scrollToSection = (index) => {
         if (index >= 0 && index < sections.length) {
-            sections[index].scrollIntoView({ behavior: "smooth" });
+            sections[index].scrollIntoView({ behavior: "smooth", block: "start" }); // 确保对齐顶部
             currentIndex = index;
         }
     };
 
-    let isScrolling = false; // 防止多次触发滚动
-    window.addEventListener("wheel", (event) => {
-        if (isScrolling) return; // 如果正在滚动，直接返回
-
-        const sensitivityThreshold = 30; // 滚动灵敏度阈值
-        if (Math.abs(event.deltaY) < sensitivityThreshold) return; // 如果滚动距离太小，不触发翻页
-
-        if (event.deltaY > 0 && currentIndex < sections.length - 1) {
-            // 向下滚动
-            isScrolling = true;
-            scrollToSection(currentIndex + 1);
-        } else if (event.deltaY < 0 && currentIndex > 0) {
-            // 向上滚动
-            isScrolling = true;
-            scrollToSection(currentIndex - 1);
-        }
-
-        // 延迟解除滚动锁定
-        setTimeout(() => {
-            isScrolling = false;
-        }, 1000); // 滚动动画完成时间
-    });
-
-    // 添加键盘事件支持
+    // 键盘事件支持
     window.addEventListener("keydown", (event) => {
-        if (isScrolling) return; // 如果正在滚动，直接返回
+        // 阻止默认行为（如滚动页面）
+        if (["ArrowDown", "ArrowUp", " "].includes(event.key)) {
+            event.preventDefault();
+        }
 
         if (event.key === "ArrowDown" && currentIndex < sections.length - 1) {
             // 按下下箭头
-            isScrolling = true;
             scrollToSection(currentIndex + 1);
         } else if (event.key === "ArrowUp" && currentIndex > 0) {
             // 按下上箭头
-            isScrolling = true;
             scrollToSection(currentIndex - 1);
+        } else if (event.key === " " && currentIndex < sections.length - 1) {
+            // 按下空格键，向下滚动
+            scrollToSection(currentIndex + 1);
         }
-
-        // 延迟解除滚动锁定
-        setTimeout(() => {
-            isScrolling = false;
-        }, 1000); // 滚动动画完成时间
     });
-
-    // 动态加载效果
-    const elementsToAnimate = document.querySelectorAll(".feature, .gallery-grid img");
-    const observer = new IntersectionObserver(
-        (entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("fade-in");
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.1 }
-    );
-
-    elementsToAnimate.forEach((el) => observer.observe(el));
 
     // 图片模态框
     const galleryImages = document.querySelectorAll(".gallery-grid img");
